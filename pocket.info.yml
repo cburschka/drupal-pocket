@@ -1,0 +1,8 @@
+name: Pocket
+type: module
+description: Authenticate and push to the Pocket API.
+core: 8.x
+package: Pocket
+
+dependencies:
+  - drupal:system (>=8.4)
