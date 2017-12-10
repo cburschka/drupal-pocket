@@ -14,7 +14,7 @@ function _pocket_example_authorize(): \Symfony\Component\HttpFoundation\Redirect
   /** @var \Drupal\pocket\PocketClientFactoryInterface $factory */
   $factory = \Drupal::service('pocket.client');
   $user = \Drupal::currentUser()->id();
-  return new \Symfony\Component\HttpFoundation\RedirectResponse(
+  return new \Drupal\Core\Routing\TrustedRedirectResponse(
     $factory->getAuthClient()->authorize(
       '_pocket_example_callback',
       ['user' => $user]
