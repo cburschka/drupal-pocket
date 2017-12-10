@@ -19,4 +19,11 @@ interface PocketClientFactoryInterface {
    */
   public function getAuthClient(): PocketAuthClient;
 
+  /**
+   * Check if the API key exists.
+   *
+   * @return bool
+   */
+  public function hasKey(): bool;
+
 }

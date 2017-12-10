@@ -80,9 +80,16 @@ class PocketClientFactory implements PocketClientFactoryInterface {
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
    */
-  private function getKey(): string {
+  public function hasKey(): bool {
+    return $this->getKey() !== NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  private function getKey() {
     if (!$this->key) {
       $this->key = $this->configFactory->get('pocket.config')->get('key');
     }
