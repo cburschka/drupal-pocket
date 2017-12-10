@@ -4,8 +4,11 @@ namespace Drupal\pocket;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Url;
+use Drupal\pocket\Exception\AccessDeniedException;
+use Drupal\pocket\Exception\UnauthorizedException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ServerException;
 
 /**
  * Pocket client.
@@ -62,6 +65,9 @@ class PocketClient implements PocketClientInterface {
    * @param array  $request
    *
    * @return array
+   *
+   * @throws \Drupal\pocket\Exception\AccessDeniedException
+   * @throws \Drupal\pocket\Exception\UnauthorizedException
    */
   protected function sendRequest(string $endpoint, array $request): array {
     $request['consumer_key'] = $this->key;
@@ -74,15 +80,32 @@ class PocketClient implements PocketClientInterface {
    * @param mixed  $body
    *
    * @return array
+   *
+   * @throws \Drupal\pocket\Exception\UnauthorizedException
+   * @throws \Drupal\pocket\Exception\AccessDeniedException
    */
   protected function sendJson(string $url, $body): array {
     try {
       $response = $this->http->request('POST', $url, ['json' => $body]);
       return Json::decode($response->getBody());
+    } catch (ServerException $e) {
+      $response = $e->getResponse();
+      switch ($response->getStatusCode()) {
+        // Swallow 400 and 503, as neither can be fixed by the caller.
+        case 400:
+        case 503:
+          watchdog_exception('pocket', $e);
+          break;
+        case 401:
+          throw new UnauthorizedException('Bad access tokens.');
+        case 403:
+          throw new AccessDeniedException('Action is not permitted.');
+      }
     } catch (GuzzleException $e) {
       watchdog_exception('pocket', $e);
-      return [];
     }
+
+    return [];
   }
 
 }
