@@ -5,6 +5,7 @@ namespace Drupal\pocket\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
+use Drupal\Core\Url;
 use Drupal\pocket\Exception\PocketHttpException;
 use Drupal\pocket\PocketAuthClient;
 use Drupal\pocket\PocketClientFactoryInterface;
@@ -82,7 +83,10 @@ class PocketAuthorize extends ControllerBase {
       throw new NotFoundHttpException('Pocket did not return an access token.');
     }
 
-    return new RedirectResponse($callback($access));
+    $url = $callback($access);
+    \assert($url instanceof Url);
+
+    return new RedirectResponse($url->toString());
   }
 
   /**
