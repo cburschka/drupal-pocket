@@ -57,13 +57,18 @@ class PocketClient {
    *
    * @return array
    *
+   * @throws \RuntimeException
    * @throws \Drupal\pocket\Exception\UnauthorizedException
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    */
   protected function sendJson(string $url, $body): array {
     try {
-      $response = $this->http->request('POST', $url, ['json' => $body]);
-      return Json::decode($response->getBody());
+      $response = $this->http->request('POST', $url, [
+        'json' => $body,
+        'headers' => ['X-Accept' => 'application/json'],
+      ]);
+      $body = $response->getBody()->getContents();
+      return Json::decode($body);
     } catch (ServerException $e) {
       $response = $e->getResponse();
       switch ($response->getStatusCode()) {

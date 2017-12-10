@@ -63,7 +63,7 @@ class PocketAuthClient extends PocketClient implements PocketAuthClientInterface
       [
         'query' => [
           'token'        => $token,
-          'redirect_uri' => $redirect->toString(),
+          'redirect_uri' => $redirect->setAbsolute()->toString(),
         ],
       ]
     );
@@ -76,7 +76,7 @@ class PocketAuthClient extends PocketClient implements PocketAuthClientInterface
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    */
   public function getRequestToken(Url $redirect, string $state = NULL): string {
-    $request = ['redirect_uri' => $redirect->toString()];
+    $request = ['redirect_uri' => $redirect->setAbsolute()->toString()];
     if ($state) {
       $request['state'] = $state;
     }
