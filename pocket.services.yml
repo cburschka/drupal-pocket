@@ -1,0 +1,6 @@
+services:
+  pocket.client:
+    class: Drupal\pocket\PocketClientFactory
+    arguments:
+      - '@http_client'
+      - '@config.factory'
