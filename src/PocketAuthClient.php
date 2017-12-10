@@ -62,8 +62,8 @@ class PocketAuthClient extends PocketClient implements PocketAuthClientInterface
       static::URL . 'auth/authorize',
       [
         'query' => [
-          'token'        => $token,
-          'redirect_uri' => $redirect->setAbsolute()->toString(),
+          'request_token' => $token,
+          'redirect_uri'  => $redirect->setAbsolute()->toString(),
         ],
       ]
     );
