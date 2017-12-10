@@ -7,7 +7,7 @@ use Drupal\Core\Url;
 /**
  * Pocket client interface.
  */
-interface PocketClientInterface {
+interface PocketUserClientInterface {
 
   /**
    * @param \Drupal\Core\Url $url

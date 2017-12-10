@@ -10,7 +10,9 @@
     "issues": "https://www.drupal.org/project/issues/pocket",
     "source": "http://cgit.drupalcode.org/pocket"
   },
-  "require": { },
+  "require": {
+    "php": "^7.0"
+  },
   "authors": [
     {
       "name": "Christoph Burschka",

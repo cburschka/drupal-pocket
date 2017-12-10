@@ -10,8 +10,13 @@ interface PocketClientFactoryInterface {
   /**
    * @param string $accessToken
    *
-   * @return \Drupal\pocket\PocketClientInterface
+   * @return \Drupal\pocket\PocketUserClientInterface
    */
-  public function getClient(string $accessToken): PocketClientInterface;
+  public function getUserClient(string $accessToken): PocketUserClientInterface;
+
+  /**
+   * @return \Drupal\pocket\PocketAuthClient
+   */
+  public function getAuthClient(): PocketAuthClient;
 
 }
