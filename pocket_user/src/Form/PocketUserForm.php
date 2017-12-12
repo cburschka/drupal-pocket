@@ -41,6 +41,8 @@ class PocketUserForm extends FormBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
    * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
    */
   public static function create(ContainerInterface $container) {
@@ -53,7 +55,7 @@ class PocketUserForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'user_pocket_form';
   }
 
@@ -64,7 +66,7 @@ class PocketUserForm extends FormBase {
     array $form,
     FormStateInterface $form_state,
     UserInterface $user = NULL
-  ) {
+  ): array {
     \assert($user instanceof UserInterface);
     $this->buildConnectionForm($form, $user);
     return $form;
