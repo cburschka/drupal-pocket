@@ -2,18 +2,35 @@
 
 namespace Drupal\pocket\Exception;
 
-use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\BadResponseException;
 
-class PocketHttpException extends ServerException {
+class PocketHttpException extends \Exception {
 
-  public function __construct(ServerException $exception) {
-    parent::__construct(
-      $exception->getMessage(),
-      $exception->getRequest(),
-      $exception->getResponse(),
-      $exception->getPrevious(),
-      $exception->getHandlerContext()
-    );
+  protected $original;
+
+  protected $response;
+
+  public function __construct(BadResponseException $exception) {
+    $response = $exception->getResponse();
+    $header = $response ? $response->getHeader('X-Error') : [];
+    parent::__construct($header[0] ?? $exception->getMessage());
+    $this->original = $exception;
+    $this->response = $response;
+  }
+
+  public static function create(BadResponseException $exception) {
+    switch ($exception->getCode()) {
+      case 403:
+        return new AccessDeniedException($exception);
+      case 401:
+        return new UnauthorizedException($exception);
+    }
+
+    return new static($exception);
+  }
+
+  public function getHeader(string $name) {
+    return $this->response->getHeader($name);
   }
 
 }

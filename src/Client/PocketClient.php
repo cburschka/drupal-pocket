@@ -3,11 +3,9 @@
 namespace Drupal\pocket\Client;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\pocket\Exception\AccessDeniedException;
-use Drupal\pocket\Exception\UnauthorizedException;
+use Drupal\pocket\Exception\PocketHttpException;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\BadResponseException;
 
 class PocketClient {
 
@@ -57,9 +55,8 @@ class PocketClient {
    *
    * @return array
    *
-   * @throws \RuntimeException
-   * @throws \Drupal\pocket\Exception\UnauthorizedException
-   * @throws \Drupal\pocket\Exception\AccessDeniedException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   protected function sendJson(string $url, $body): array {
     try {
@@ -67,26 +64,18 @@ class PocketClient {
         'json' => $body,
         'headers' => ['X-Accept' => 'application/json'],
       ]);
-      $body = $response->getBody()->getContents();
-      return Json::decode($body);
-    } catch (ServerException $e) {
-      $response = $e->getResponse();
-      switch ($response->getStatusCode()) {
-        // Swallow 400 and 503, as neither can be fixed by the caller.
-        case 400:
-        case 503:
-          watchdog_exception('pocket', $e);
-          break;
-        case 401:
-          throw new UnauthorizedException($e);
-        case 403:
-          throw new AccessDeniedException($e);
+      try {
+        $body = $response->getBody()->getContents();
       }
-    } catch (GuzzleException $e) {
-      watchdog_exception('pocket', $e);
+      catch (\RuntimeException $e) {
+        watchdog_exception('pocket', $e);
+        $body = '';
+      }
+      return Json::decode($body);
     }
-
-    return [];
+    catch (BadResponseException $e) {
+      throw new PocketHttpException($e);
+    }
   }
 
 }
