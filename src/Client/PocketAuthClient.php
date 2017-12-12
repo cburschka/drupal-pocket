@@ -1,10 +1,11 @@
 <?php
 
-namespace Drupal\pocket;
+namespace Drupal\pocket\Client;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\Core\Url;
+use Drupal\pocket\AccessToken;
 use GuzzleHttp\ClientInterface;
 
 class PocketAuthClient extends PocketClient implements PocketAuthClientInterface {

@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\pocket\AccessToken;
-use Drupal\pocket\PocketClientFactoryInterface;
+use Drupal\pocket\Client\PocketClientFactoryInterface;
 use Drupal\pocket_user\PocketUserManager;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class PocketUserForm extends FormBase {
 
   /**
-   * @var \Drupal\pocket\PocketClientFactoryInterface
+   * @var \Drupal\pocket\Client\PocketClientFactoryInterface
    */
   protected $clientFactory;
 
@@ -28,8 +28,8 @@ class PocketUserForm extends FormBase {
   /**
    * PocketUserForm constructor.
    *
-   * @param \Drupal\pocket\PocketClientFactoryInterface $clientFactory
-   * @param \Drupal\pocket_user\PocketUserManager       $manager
+   * @param \Drupal\pocket\Client\PocketClientFactoryInterface $clientFactory
+   * @param \Drupal\pocket_user\PocketUserManager              $manager
    */
   public function __construct(
     PocketClientFactoryInterface $clientFactory,

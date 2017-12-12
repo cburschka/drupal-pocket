@@ -1,8 +1,9 @@
 <?php
 
-namespace Drupal\pocket;
+namespace Drupal\pocket\Client;
 
 use Drupal\Core\Url;
+use Drupal\pocket\AccessToken;
 
 interface PocketAuthClientInterface {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pocket;
+namespace Drupal\pocket\Client;
 
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -72,7 +72,7 @@ class PocketClientFactory implements PocketClientFactoryInterface {
   /**
    * @param string $accessToken
    *
-   * @return \Drupal\pocket\PocketUserClient
+   * @return \Drupal\pocket\Client\PocketUserClientInterface
    */
   public function getUserClient(string $accessToken
   ): PocketUserClientInterface {

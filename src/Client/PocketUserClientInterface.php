@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pocket;
+namespace Drupal\pocket\Client;
 
 use Drupal\Core\Url;
 
