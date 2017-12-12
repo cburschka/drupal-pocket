@@ -3,6 +3,8 @@
 namespace Drupal\pocket\Client;
 
 use Drupal\Core\Url;
+use Drupal\pocket\PocketItem;
+use Drupal\pocket\PocketItemInterface;
 use GuzzleHttp\ClientInterface;
 
 /**
@@ -33,7 +35,7 @@ class PocketUserClient extends PocketClient implements PocketUserClientInterface
    * @throws \Drupal\pocket\Exception\UnauthorizedException
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    */
-  public function add(Url $url, array $tags = [], string $title = NULL): array {
+  public function add(Url $url, array $tags = [], string $title = NULL): PocketItemInterface {
     $request['url'] = $url->setAbsolute()->toString();
     if ($tags) {
       $request['tags'] = implode(',', $tags);
@@ -42,7 +44,7 @@ class PocketUserClient extends PocketClient implements PocketUserClientInterface
       $request['title'] = $title;
     }
     $response = $this->sendRequest('v3/add', $request);
-    return $response['item'];
+    return new PocketItem($response['item']);
   }
 
   /**

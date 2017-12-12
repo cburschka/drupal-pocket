@@ -3,6 +3,7 @@
 namespace Drupal\pocket\Client;
 
 use Drupal\Core\Url;
+use Drupal\pocket\PocketItemInterface;
 
 /**
  * Pocket client interface.
@@ -17,11 +18,11 @@ interface PocketUserClientInterface {
    * @param string           $title
    *   (optional) title. Ignored if the URL provides its own title.
    *
-   * @return array
+   * @return \Drupal\pocket\PocketItemInterface
    *   The item metadata returned by Pocket.
    *
    * @see https://getpocket.com/developer/docs/v3/add
    */
-  public function add(Url $url, array $tags = [], string $title = NULL): array;
+  public function add(Url $url, array $tags = [], string $title = NULL): PocketItemInterface;
 
 }
