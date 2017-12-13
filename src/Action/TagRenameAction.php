@@ -15,7 +15,7 @@ class TagRenameAction extends PocketAction {
    */
   public function __construct(string $old, string $new, array $options = []) {
     parent::__construct($options);
-    $this->set('old', $old)->set('new', $new);
+    $this->set('old_tag', $old)->set('new_tag', $new);
   }
 
 }
