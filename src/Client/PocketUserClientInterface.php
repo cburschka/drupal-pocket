@@ -37,6 +37,8 @@ interface PocketUserClientInterface {
    *
    * @return bool
    *   TRUE if all actions succeeded.
+   *
+   * @see https://getpocket.com/developer/docs/v3/modify
    */
   public function modify(array $actions): bool;
 
