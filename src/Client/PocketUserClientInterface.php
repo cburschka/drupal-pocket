@@ -11,6 +11,8 @@ use Drupal\pocket\PocketItemInterface;
 interface PocketUserClientInterface {
 
   /**
+   * Perform a request on 'v3/add'.
+   *
    * @param \Drupal\Core\Url $url
    *   URL of the submitted content.
    * @param string[]         $tags

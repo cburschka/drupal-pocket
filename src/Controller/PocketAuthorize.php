@@ -6,9 +6,9 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
 use Drupal\Core\Url;
+use Drupal\pocket\Client\PocketAuthClient;
+use Drupal\pocket\Client\PocketClientFactoryInterface;
 use Drupal\pocket\Exception\PocketHttpException;
-use Drupal\pocket\PocketAuthClient;
-use Drupal\pocket\PocketClientFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -23,20 +23,20 @@ class PocketAuthorize extends ControllerBase {
   protected $storage;
 
   /**
-   * @var \Drupal\pocket\PocketClientFactoryInterface
+   * @var \Drupal\pocket\Client\PocketClientFactoryInterface
    */
   protected $clientFactory;
 
   /**
-   * @var \Drupal\pocket\PocketAuthClient
+   * @var \Drupal\pocket\Client\PocketAuthClient
    */
   private $client;
 
   /**
    * PocketAuthorize constructor.
    *
-   * @param \Drupal\Core\KeyValueStore\KeyValueStoreInterface $storage
-   * @param \Drupal\pocket\PocketClientFactoryInterface       $clientFactory
+   * @param \Drupal\Core\KeyValueStore\KeyValueStoreInterface  $storage
+   * @param \Drupal\pocket\Client\PocketClientFactoryInterface $clientFactory
    */
   public function __construct(
     KeyValueStoreInterface $storage,
@@ -92,7 +92,7 @@ class PocketAuthorize extends ControllerBase {
   /**
    * Initialize the client.
    *
-   * @return \Drupal\pocket\PocketAuthClient
+   * @return \Drupal\pocket\Client\PocketAuthClient
    */
   protected function getClient(): PocketAuthClient {
     if ($this->client === NULL) {

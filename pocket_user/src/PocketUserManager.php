@@ -4,7 +4,6 @@ namespace Drupal\pocket_user;
 
 use Drupal\Core\Database\Connection;
 use Drupal\pocket\AccessToken;
-use Masterminds\HTML5\Exception;
 
 class PocketUserManager {
 
