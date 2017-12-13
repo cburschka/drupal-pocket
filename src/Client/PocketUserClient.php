@@ -3,6 +3,7 @@
 namespace Drupal\pocket\Client;
 
 use Drupal\Core\Url;
+use Drupal\pocket\Action\PocketActionInterface;
 use Drupal\pocket\PocketItem;
 use Drupal\pocket\PocketItemInterface;
 use GuzzleHttp\ClientInterface;
@@ -45,6 +46,32 @@ class PocketUserClient extends PocketClient implements PocketUserClientInterface
     }
     $response = $this->sendRequest('v3/add', $request);
     return new PocketItem($response['item']);
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @throws \Drupal\pocket\Exception\UnauthorizedException
+   * @throws \Drupal\pocket\Exception\AccessDeniedException
+   */
+  public function modify(array $actions): bool {
+    /** @var \Drupal\pocket\Action\PocketActionInterface[] $actions */
+    $request['actions'] = [];
+    foreach ($actions as $action) {
+      \assert($action instanceof PocketActionInterface);
+      $request['actions'][] = $action->serialize();
+    }
+    $response = $this->sendRequest('v3/send', $request);
+    $success = !empty($response['status']);
+    $results = $response['action_results'] ?? [];
+    foreach ($actions as $i => $action) {
+      $result = $results[$i] ?? FALSE;
+      $action->setResult($result !== FALSE);
+      if (\is_array($result)) {
+        $action->setResultItem(new PocketItem($result));
+      }
+    }
+    return $success;
   }
 
   /**

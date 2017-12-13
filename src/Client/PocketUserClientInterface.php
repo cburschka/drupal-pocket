@@ -27,4 +27,17 @@ interface PocketUserClientInterface {
    */
   public function add(Url $url, array $tags = [], string $title = NULL): PocketItemInterface;
 
+  /**
+   * Perform a request on 'v3/send'.
+   *
+   * Success can be checked for each action via ::isSuccessful().
+   *
+   * @param \Drupal\pocket\Action\PocketActionInterface[] $actions
+   *   An array of actions.
+   *
+   * @return bool
+   *   TRUE if all actions succeeded.
+   */
+  public function modify(array $actions): bool;
+
 }
