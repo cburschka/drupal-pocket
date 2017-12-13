@@ -82,7 +82,7 @@ class TagsAction extends PocketAction {
    * @return $this
    */
   public function setTags(array $tags = []) {
-    return $this->set('tags', $tags);
+    return $this->set('tags', implode(', ', $tags));
   }
 
   /**
