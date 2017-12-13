@@ -80,6 +80,21 @@ class PocketUserClient extends PocketClient implements PocketUserClientInterface
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
+   */
+  public function retrieve(array $options): array {
+    $response = $this->sendRequest('v3/get', $options);
+    $items = [];
+    foreach ($response['list'] ?? [] as $i => $item) {
+      $items[$i] = new PocketItem($item);
+    }
+    return $items;
+  }
+
+  /**
+   * {@inheritdoc}
    */
   protected function sendRequest(string $endpoint, array $request): array {
     $request['access_token'] = $this->accessToken;

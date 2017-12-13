@@ -42,4 +42,16 @@ interface PocketUserClientInterface {
    */
   public function modify(array $actions): bool;
 
+  /**
+   * Perform a request on 'v3/get'.
+   *
+   * @param array $query
+   *   An array of query parameters.
+   *
+   * @return \Drupal\pocket\PocketItemInterface[]
+   *
+   * @see https://getpocket.com/developer/docs/v3/retrieve
+   */
+  public function retrieve(array $query): array;
+
 }
