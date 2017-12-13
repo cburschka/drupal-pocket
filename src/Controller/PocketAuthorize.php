@@ -65,8 +65,9 @@ class PocketAuthorize extends ControllerBase {
    * @param string $id
    *
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
-   * @throws \InvalidArgumentException
+   *
    * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function authorize(string $id): RedirectResponse {
     $request = $this->storage->get("request:$id");

@@ -33,6 +33,8 @@ class PocketUserClient extends PocketClient implements PocketUserClientInterface
   /**
    * {@inheritdoc}
    *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
    * @throws \Drupal\pocket\Exception\UnauthorizedException
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    */
@@ -51,6 +53,8 @@ class PocketUserClient extends PocketClient implements PocketUserClientInterface
   /**
    * {@inheritdoc}
    *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
    * @throws \Drupal\pocket\Exception\UnauthorizedException
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    */

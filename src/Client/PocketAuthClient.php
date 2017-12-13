@@ -42,6 +42,8 @@ class PocketAuthClient extends PocketClient implements PocketAuthClientInterface
   /**
    * {@inheritdoc}
    *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
    * @throws \Drupal\pocket\Exception\UnauthorizedException
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    * @throws \InvalidArgumentException
@@ -73,6 +75,8 @@ class PocketAuthClient extends PocketClient implements PocketAuthClientInterface
   /**
    * {@inheritdoc}
    *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
    * @throws \Drupal\pocket\Exception\UnauthorizedException
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    */
@@ -88,6 +92,8 @@ class PocketAuthClient extends PocketClient implements PocketAuthClientInterface
   /**
    * {@inheritdoc}
    *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
    * @throws \Drupal\pocket\Exception\UnauthorizedException
    * @throws \Drupal\pocket\Exception\AccessDeniedException
    */

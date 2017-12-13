@@ -41,8 +41,8 @@ class PocketClient {
    *
    * @return array
    *
-   * @throws \Drupal\pocket\Exception\AccessDeniedException
-   * @throws \Drupal\pocket\Exception\UnauthorizedException
+   * @throws \Drupal\pocket\Exception\PocketHttpException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   protected function sendRequest(string $endpoint, array $request): array {
     $request['consumer_key'] = $this->key;

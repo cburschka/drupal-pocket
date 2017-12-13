@@ -11,6 +11,7 @@ use Drupal\pocket\Client\PocketClientFactoryInterface;
 use Drupal\pocket_user\PocketUserManager;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PocketUserForm extends FormBase {
@@ -113,21 +114,27 @@ class PocketUserForm extends FormBase {
    *
    * @param array                                $form
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *
-   * @throws \Drupal\pocket\Exception\UnauthorizedException
-   * @throws \Drupal\pocket\Exception\AccessDeniedException
-   * @throws \InvalidArgumentException
    */
   public function connect(array &$form, FormStateInterface $form_state) {
     /** @var UserInterface $user */
     $user = $form['#user'];
 
     $client = $this->clientFactory->getAuthClient();
-    $url = $client->authorize([$this, 'callback'], ['user' => $user->id()]);
-    $form_state->setResponse(new TrustedRedirectResponse($url->toString()));
+    try {
+      $url = $client->authorize([$this, 'callback'], ['user' => $user->id()]);
+      $form_state->setResponse(new TrustedRedirectResponse($url->toString()));
+    } catch (\Exception $exception) {
+      drupal_set_message($this->t('Failed to connect account: %message', [
+        '%message' => $exception->getMessage(),
+      ]));
+    } catch (GuzzleException $exception) {
+      drupal_set_message($this->t('Failed to connect account: %message', [
+        '%message' => $exception->getMessage(),
+      ]));
+    }
   }
 
-  public function disconnect(array &$form, FormStateInterface $form_state) {
+  public function disconnect(array &$form) {
     $user = $form['#user'];
     \assert($user instanceof UserInterface);
 
