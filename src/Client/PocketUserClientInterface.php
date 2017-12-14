@@ -4,6 +4,7 @@ namespace Drupal\pocket\Client;
 
 use Drupal\Core\Url;
 use Drupal\pocket\PocketItemInterface;
+use Drupal\pocket\PocketQueryInterface;
 
 /**
  * Pocket client interface.
@@ -53,5 +54,14 @@ interface PocketUserClientInterface {
    * @see https://getpocket.com/developer/docs/v3/retrieve
    */
   public function retrieve(array $query): array;
+
+  /**
+   * Build a query object for retrieving items.
+   *
+   * @param array $options
+   *
+   * @return \Drupal\pocket\PocketQueryInterface
+   */
+  public function query(array $options = []): PocketQueryInterface;
 
 }

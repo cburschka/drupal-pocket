@@ -6,6 +6,8 @@ use Drupal\Core\Url;
 use Drupal\pocket\Action\PocketActionInterface;
 use Drupal\pocket\PocketItem;
 use Drupal\pocket\PocketItemInterface;
+use Drupal\pocket\PocketQuery;
+use Drupal\pocket\PocketQueryInterface;
 use GuzzleHttp\ClientInterface;
 
 /**
@@ -99,6 +101,13 @@ class PocketUserClient extends PocketClient implements PocketUserClientInterface
   protected function sendRequest(string $endpoint, array $request): array {
     $request['access_token'] = $this->accessToken;
     return parent::sendRequest($endpoint, $request);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function query(array $options = []): PocketQueryInterface {
+    return new PocketQuery($this, $options);
   }
 
 }
