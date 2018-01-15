@@ -4,5 +4,6 @@ description: Authenticate and push to the Pocket API.
 core: 8.x
 package: Pocket
 
+configure: pocket.config_form
 dependencies:
   - drupal:system (>=8.4)
